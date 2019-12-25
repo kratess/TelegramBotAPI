@@ -28,3 +28,17 @@ or
 System.out.println( bot.execute(request).toString(4) );
 ```
 The return of method `execute` is a JSONArray
+
+---
+
+## Get Updates
+### For now only long polling
+```java
+        bot.setUpdateListener(new UpdatesEvent() {
+            @Override
+            public void onUpdate(JSONObject updates) {
+                System.out.println(updates.toString(4));
+            }
+        }, 1000, 100, 0, null);
+```
+Return a JSONObject

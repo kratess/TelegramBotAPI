@@ -4,10 +4,11 @@ import org.json.JSONObject;
 import pc.kratess.TelegramBotAPI.Utils.GetURLContent;
 
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 public class TelegramBot {
 
-    private String Token;
+    private final String Token;
 
     public TelegramBot(String Token) {
         this.Token = Token;
@@ -43,6 +44,26 @@ public class TelegramBot {
 
     public <T> JSONObject execute(T request) {
         return GetURLContent.getContent("https://api.telegram.org/bot"+this.Token+"/" + request.toString());
+    }
+
+    @Deprecated
+    public <T> void async_execute_deprecated(T request, ExecuteEvent executeEvent) {
+        CompletableFuture.runAsync(new Runnable() {
+            @Override
+            public void run() {
+                executeEvent.onExecute(GetURLContent.getContent("https://api.telegram.org/bot"+Token+"/" + request.toString()));
+            }
+        });
+    }
+
+    public <T> void async_execute(T request, ExecuteEvent executeEvent) {
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+                executeEvent.onExecute(GetURLContent.getContent("https://api.telegram.org/bot"+Token+"/" + request.toString()));
+                Thread.currentThread().interrupt();
+            }
+        })).start();
     }
 
     private JSONObject getUpdates(int offset, int limit, int timeout, ArrayList<String> allowed_updates) {

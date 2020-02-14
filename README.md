@@ -10,7 +10,7 @@ There are 2 methods
 - Webhooks (Setup a callback server. Telegram will send request to our server)
 - Long polling (We will send periodic request to Telegram server)
 
-- [x] For now only Long Polling can be used
+- [x] For now only Long Polling can be used. We have in plan to add Webhooks but for moment don't have a vps for try it
 
 ### Long Polling
 ```java

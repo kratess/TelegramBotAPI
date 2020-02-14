@@ -14,11 +14,18 @@ There are 2 methods
 
 ### Long Polling
 ```java
-bot.setUpdateListener(new UpdatesEvent() {
-    @Override
-    public void onUpdate(JSONObject updates) {
-        System.out.println(updates.toString(4));
-    }
+bot.setUpdateListener(new UpdateEvent() {
+  @Override
+  public void onUpdate(Update update) {
+    int hour = LocalDateTime.now().getHour();
+    int minute = LocalDateTime.now().getMinute();
+    int second = LocalDateTime.now().getSecond();
+
+    String time = "[" + hour + ":" + minute + ":" + second + "]";
+
+    System.out.println(time);
+    System.out.println(update.toString());
+  }
 }, 1000, 100, 0, null);
 ```
 Return a JSONObject

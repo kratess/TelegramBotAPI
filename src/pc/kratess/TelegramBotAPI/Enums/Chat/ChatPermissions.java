@@ -1,5 +1,7 @@
 package pc.kratess.TelegramBotAPI.Enums.Chat;
 
+import org.json.JSONObject;
+
 public class ChatPermissions {
 
     private boolean canSendMessages;
@@ -10,6 +12,40 @@ public class ChatPermissions {
     private boolean canChangeInfo;
     private boolean canInviteUsers;
     private boolean canPinMessages;
+
+    public ChatPermissions(JSONObject chatPermissionsObject) {
+        if (!chatPermissionsObject.isNull("canSendMessages")) {
+            this.canSendMessages = chatPermissionsObject.getBoolean("canSendMessages");
+        }
+
+        if (!chatPermissionsObject.isNull("canSendMediaMessages")) {
+            this.canSendMediaMessages = chatPermissionsObject.getBoolean("canSendMediaMessages");
+        }
+
+        if (!chatPermissionsObject.isNull("canSendPolls")) {
+            this.canSendPolls = chatPermissionsObject.getBoolean("canSendPolls");
+        }
+
+        if (!chatPermissionsObject.isNull("canSendOtherMessages")) {
+            this.canSendOtherMessages = chatPermissionsObject.getBoolean("canSendOtherMessages");
+        }
+
+        if (!chatPermissionsObject.isNull("canAddWebPagePreviews")) {
+            this.canAddWebPagePreviews = chatPermissionsObject.getBoolean("canAddWebPagePreviews");
+        }
+
+        if (!chatPermissionsObject.isNull("canChangeInfo")) {
+            this.canChangeInfo = chatPermissionsObject.getBoolean("canChangeInfo");
+        }
+
+        if (!chatPermissionsObject.isNull("canInviteUsers")) {
+            this.canInviteUsers = chatPermissionsObject.getBoolean("canInviteUsers");
+        }
+
+        if (!chatPermissionsObject.isNull("canPinMessages")) {
+            this.canPinMessages = chatPermissionsObject.getBoolean("canPinMessages");
+        }
+    }
 
     public ChatPermissions() {
 
@@ -94,4 +130,5 @@ public class ChatPermissions {
     public boolean isCan_pin_messages() {
         return canPinMessages;
     }
+
 }

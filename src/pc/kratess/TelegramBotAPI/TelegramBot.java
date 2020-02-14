@@ -1,10 +1,16 @@
 package pc.kratess.TelegramBotAPI;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+import pc.kratess.TelegramBotAPI.Updates.Update;
 import pc.kratess.TelegramBotAPI.Utils.GetURLContent;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class TelegramBot {
 
@@ -14,16 +20,38 @@ public class TelegramBot {
         this.Token = Token;
     }
 
-    private UpdatesEvent listener;
+    private UpdateEvent listener;
 
-    public void setUpdateListener(UpdatesEvent listener, int time, int limit, int timeout, ArrayList<String> allowed_updates) {
+    public void setUpdateListener(UpdateEvent listener, int period, int limit, int timeout, ArrayList<String> allowed_updates) {
         this.listener = listener;
 
-        if (listener != null) {
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+            int last_offset = 0;
+
+            @Override
+            public void run() {
+                JSONObject json = getUpdates(last_offset + 1, limit, timeout, allowed_updates);
+                int result_length = json.getJSONArray("result").length();
+                if (result_length > 0) {
+                    last_offset = ((JSONObject) json.getJSONArray("result").get(result_length-1)).getInt("update_id");
+                }
+
+                JSONArray array = json.getJSONArray("result");
+                IntStream.range(0, array.length())
+                        .mapToObj(array::getJSONObject)
+                        .map(Update::new)
+                        .collect(Collectors.toList())
+                        .forEach(listener::onUpdate);
+            }
+        }, period, period);
+
+        /*if (listener != null) {
             (new Thread(new Runnable() {
 
                 @Override
                 public void run() {
+                    System.out.println("CAKL2");
                     int last_offset = 0;
                     while (!Thread.interrupted())
                         try {
@@ -33,13 +61,14 @@ public class TelegramBot {
                                 last_offset = ((JSONObject) json.getJSONArray("result").get(result_length-1)).getInt("update_id");
                             }
                             listener.onUpdate(json);
-                            Thread.sleep(time);
-                        } catch (InterruptedException e) {
-                            // ooops
+                            System.out.println("calleeedd");
+                            Thread.sleep(period);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
                         }
                 }
             })).start();
-        }
+        }*/
     }
 
     public <T> JSONObject execute(T request) {

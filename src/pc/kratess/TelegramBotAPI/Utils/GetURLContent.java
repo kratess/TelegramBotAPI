@@ -34,8 +34,6 @@ public class GetURLContent {
 
             return json;
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

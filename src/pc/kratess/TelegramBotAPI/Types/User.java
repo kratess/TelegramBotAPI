@@ -77,4 +77,31 @@ public class User {
     public String getLanguageCode() {
         return languageCode;
     }
+
+    public JSONObject toObject() {
+        JSONObject object = new JSONObject();
+
+        object.put("id", id);
+        object.put("is_bot", is_bot);
+        object.put("first_name", first_name);
+
+        if (lastName != null) {
+            object.put("last_name", lastName);
+        }
+
+        if (username != null) {
+            object.put("username", username);
+        }
+
+        if (languageCode != null) {
+            object.put("language_code", languageCode);
+        }
+
+        return object;
+    }
+
+    @Override
+    public String toString() {
+        return toObject().toString(4);
+    }
 }

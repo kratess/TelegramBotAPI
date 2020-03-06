@@ -195,6 +195,28 @@ public class Update {
             object.put("edited_channel_post", editedChannelPost.toObject());
         }
 
+        // TODO: 06/03/2020
+
+        if (inlineQuery != null) {
+            object.put("inline_query", new JSONObject(inlineQuery));
+        }
+
+        if (chosenInlineResult != null) {
+            object.put("chosen_inline_result", new JSONObject(chosenInlineResult));
+        }
+
+        if (callbackQuery != null) {
+            object.put("callback_query", callbackQuery.toObject());
+        }
+
+        if (shippingQuery != null) {
+            object.put("shipping_query", new JSONObject(shippingQuery));
+        }
+
+        if (preCheckoutQuery != null) {
+            object.put("pre_checkout_query", new JSONObject(preCheckoutQuery));
+        }
+
         return object;
     }
 

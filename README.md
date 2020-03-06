@@ -10,15 +10,23 @@ There are 2 methods
 - Webhooks (Setup a callback server. Telegram will send request to our server)
 - Long polling (We will send periodic request to Telegram server)
 
-- [x] For now only Long Polling can be used. We have in plan to add Webhooks but for moment don't have a vps for try it
+- [x] For now only Long Polling can be used.
+- [x] Complete the toString() method with json
 
 ### Long Polling
 ```java
-bot.setUpdateListener(new UpdatesEvent() {
-    @Override
-    public void onUpdate(JSONObject updates) {
-        System.out.println(updates.toString(4));
-    }
+bot.setUpdateListener(new UpdateEvent() {
+  @Override
+  public void onUpdate(Update update) {
+    int hour = LocalDateTime.now().getHour();
+    int minute = LocalDateTime.now().getMinute();
+    int second = LocalDateTime.now().getSecond();
+
+    String time = "[" + hour + ":" + minute + ":" + second + "]";
+
+    System.out.println(time);
+    System.out.println(update.toString());
+  }
 }, 1000, 100, 0, null);
 ```
 Return a JSONObject

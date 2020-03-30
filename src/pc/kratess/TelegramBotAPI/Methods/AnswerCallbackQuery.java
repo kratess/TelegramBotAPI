@@ -6,7 +6,7 @@ public class AnswerCallbackQuery {
 
     private String text;
     private boolean showAlert;
-    private String url;
+    private String url = "";
     private int cacheTime;
 
     public AnswerCallbackQuery(String callback_query_id) {

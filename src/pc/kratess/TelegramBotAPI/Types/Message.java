@@ -519,6 +519,10 @@ public class Message {
         return date;
     }
 
+    public Chat getChat() {
+        return chat;
+    }
+
     public User getForwardFrom() {
         return forwardFrom;
     }
@@ -693,6 +697,7 @@ public class Message {
         object.put("text", text);
         object.put("message_id", message_id);
         object.put("date", date);
+        object.put("chat", chat.toObject());
 
         return object;
     }

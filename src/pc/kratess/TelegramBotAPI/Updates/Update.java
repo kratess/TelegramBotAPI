@@ -198,7 +198,8 @@ public class Update {
         // TODO: 06/03/2020
 
         if (inlineQuery != null) {
-            object.put("inline_query", new JSONObject(inlineQuery));
+            object.put("inline_query", inlineQuery.toObject());
+            //object.put("inline_query", new JSONObject(inlineQuery));
         }
 
         if (chosenInlineResult != null) {

@@ -38,4 +38,33 @@ public class InlineQuery {
         return this;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public User getFrom() {
+        return from;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public String getOffset() {
+        return offset;
+    }
+
+    public JSONObject toObject() {
+        JSONObject object = new JSONObject();
+
+        object.put("id", id);
+        object.put("from", from.toObject());
+
+        return object;
+    }
+
 }
